@@ -13,6 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/qua-platform/QuaQsim",
     packages=setuptools.find_packages(),
+    package_dir={'': 'quaqsim'},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
