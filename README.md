@@ -11,9 +11,9 @@ Simulate simultaneous, two-qubit Rabi oscillations using an amplitude sweep on a
 simulated backend.
 ![](img/rabi_example.png)
 
-### 1.1 Start with your QUA config
+### 0. Start with a QUA config
 <details> 
-  <summary>[example] config dictionary </summary>
+  <summary>Example</summary>
 
 ```python
 
@@ -215,7 +215,7 @@ config = {
 ```
 </details>
 
-### 1.2 Map your QUA elements to simulation channels
+### 1. Map your QUA elements to simulation channels
 ```python
 from quaqsim.architectures.from_qua_channels import (
     TransmonPairBackendChannelReadout,
