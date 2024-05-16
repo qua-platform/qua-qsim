@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="quaqsim",
+    name="qua-qsim",
     version="0.1",
     author="Quantum Machines",
     author_email="dean.poulos@quantum-machines.com",
