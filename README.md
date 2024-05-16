@@ -236,15 +236,10 @@ settings = TransmonPairSettings(
 )
 
 transmon_pair = TransmonPair(settings)
-backend = TransmonPairBackendFromQUA(
-    transmon_pair, 
-    config_to_transmon_pair_backend_map
-)
-
 ```
 
 
-### 1. Map your QUA elements to simulation channels
+### 2. Map your QUA elements to simulation channels
 ```python
 from quaqsim.architectures.from_qua_channels import (
     TransmonPairBackendChannelReadout,
@@ -282,7 +277,7 @@ channel_map = {
 }
 ```
 
-### 2. Define a QUA Program
+### 3. Define a QUA Program
 ```python
 from qm.qua import *
 
@@ -306,12 +301,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from quaqsim import simulate_program
+from quaqsim.architectures.transmon_pair_backend_from_qua import \
+    TransmonPairBackendFromQUA
+
+backend = TransmonPairBackendFromQUA(transmon_pair, channel_map)
 
 results = simulate_program(
     qua_program=prog,
     qua_config=config,
     qua_config_to_backend_map=channel_map,
-    backend=transmon_pair_backend,
+    backend=backend,
     num_shots=10_000,
 )
 
