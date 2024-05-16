@@ -35,9 +35,9 @@ def test_simultaneous_rabi(transmon_pair_backend, transmon_pair_qua_config, conf
     assert np.allclose(q1_state_probabilities, expected_state_probabilities, atol=0.1)
     assert np.allclose(q2_state_probabilities, expected_state_probabilities, atol=0.1)
 
-    for i, result in enumerate(results):
-        plt.plot(np.arange(start, stop, step), results[i], '.-', label=f"Simulated Q{i}")
-        plt.ylim(-0.05, 1.05)
-    # plt.plot(np.arange(start, stop, step), expected_state_probabilities, '.-', label=f"Expected")
-    plt.legend()
-    plt.show()
+    # for i, result in enumerate(results):
+    #     plt.plot(np.arange(start, stop, step), results[i], '.-', label=f"Simulated Q{i}")
+    #     plt.ylim(-0.05, 1.05)
+    # # plt.plot(np.arange(start, stop, step), expected_state_probabilities, '.-', label=f"Expected")
+    # plt.legend()
+    # plt.show()
