@@ -215,6 +215,35 @@ config = {
 ```
 </details>
 
+### 1. Define your simulated quantum parameters
+```python
+from quaqsim.architectures.transmon_pair import TransmonPair
+from quaqsim.architectures import TransmonSettings
+from quaqsim.architectures.transmon_pair_settings import TransmonPairSettings
+
+settings = TransmonPairSettings(
+    TransmonSettings(
+        resonant_frequency=4860000000.0,
+        anharmonicity=-320000000.0,
+        rabi_frequency=0.22e9
+    ),
+    TransmonSettings(
+        resonant_frequency=4970000000.0,
+        anharmonicity=-320000000.0,
+        rabi_frequency=0.26e9
+    ),
+    coupling_strength=0.002e9
+)
+
+transmon_pair = TransmonPair(settings)
+backend = TransmonPairBackendFromQUA(
+    transmon_pair, 
+    config_to_transmon_pair_backend_map
+)
+
+```
+
+
 ### 1. Map your QUA elements to simulation channels
 ```python
 from quaqsim.architectures.from_qua_channels import (
@@ -253,35 +282,7 @@ channel_map = {
 }
 ```
 
-### 2. Define your simulated quantum parameters
-```python
-from quaqsim.architectures.transmon_pair import TransmonPair
-from quaqsim.architectures import TransmonSettings
-from quaqsim.architectures.transmon_pair_settings import TransmonPairSettings
-
-settings = TransmonPairSettings(
-    TransmonSettings(
-        resonant_frequency=4860000000.0,
-        anharmonicity=-320000000.0,
-        rabi_frequency=0.22e9
-    ),
-    TransmonSettings(
-        resonant_frequency=4970000000.0,
-        anharmonicity=-320000000.0,
-        rabi_frequency=0.26e9
-    ),
-    coupling_strength=0.002e9
-)
-
-transmon_pair = TransmonPair(settings)
-backend = TransmonPairBackendFromQUA(
-    transmon_pair, 
-    config_to_transmon_pair_backend_map
-)
-
-```
-
-### 3. Define a QUA Program
+### 2. Define a QUA Program
 ```python
 from qm.qua import *
 
