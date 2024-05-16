@@ -4,7 +4,11 @@ A quantum simulator for QUA programs.
 ## Installation
 pip install git+http://github.com/qua-plaftorm/quaqsim.git
 
-## Example
+## Example: Power Rabi
+Simulate simultaneous, two-qubit Rabi oscillations using an amplitude sweep on a
+simulated backend.
+![](img/rabi_example.png)
+
 ### 1. Load your quantum parameters
 ```python
 from quaqsim.architectures.transmon_pair import TransmonPair
@@ -104,4 +108,3 @@ for i, result in enumerate(results):
 plt.legend()
 plt.show()
 ```
-![](img/rabi_example.png)
