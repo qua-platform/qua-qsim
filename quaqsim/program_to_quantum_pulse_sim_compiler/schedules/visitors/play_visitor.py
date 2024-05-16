@@ -8,7 +8,7 @@ from quaqsim.program_to_quantum_pulse_sim_compiler.schedules.visitors.visitor im
 class PlayVisitor(Visitor):
     def visit(self, instruction: Play, instruction_context: Context):
         if instruction.phase == 0.:
-            pulse.play(instruction.shape, instruction_context.timeline.pulse_channel)
+            pulse.play(instruction.shape, instruction_context.timeline.pulse_channel, name=instruction.name)
         else:
             with pulse.phase_offset(instruction.phase, instruction_context.timeline.pulse_channel):
-                pulse.play(instruction.shape, instruction_context.timeline.pulse_channel)
+                pulse.play(instruction.shape, instruction_context.timeline.pulse_channel, name=instruction.name)

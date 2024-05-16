@@ -1,15 +1,33 @@
 from typing import List
 
+from qiskit.pulse import Schedule
+from qiskit.visualization.pulse_v2 import IQXDebugging
 from qiskit_dynamics import DynamicsBackend
 
 
 class QuantumPulseSimulator:
     def __init__(self, backend: DynamicsBackend, schedules: List):
         self.backend = backend
-        self.schedules = schedules
+        self.schedules: List[Schedule] = schedules
 
     def plot_schedule(self, index: int):
-        self.schedules[index].draw()
+        from qiskit.visualization.pulse_v2 import draw
+
+        draw(
+            program=self.schedules[index],
+            style=IQXDebugging(),
+            # backend=self.backend,
+            backend=None,
+            time_range=None,
+            time_unit="ns",
+            disable_channels=None,
+            show_snapshot=True,
+            show_framechange=True,
+            show_waveform_info=True,
+            show_barrier=True,
+            plotter="mpl2d",
+            axis=None,
+        )
 
     def run(self, num_shots: int) -> List[List[float]]:
         job = self.backend.run(self.schedules, shots=num_shots)
