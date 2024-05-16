@@ -2,7 +2,9 @@
 A quantum simulator for QUA programs.
 
 ## Installation
+```sh
 pip install git+http://github.com/qua-plaftorm/quaqsim.git
+```
 
 ## Example: Power Rabi
 Simulate simultaneous, two-qubit Rabi oscillations using an amplitude sweep on a
