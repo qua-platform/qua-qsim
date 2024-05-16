@@ -4,16 +4,16 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="qua-qsim",
+    name="quaqsim",
     version="0.1",
     author="Quantum Machines",
     author_email="dean.poulos@quantum-machines.com",
     description="A quantum simulator for QUA programs",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/qua-platform/QuaQsim",
+    url="https://github.com/qua-platform/qua-qsim",
     packages=setuptools.find_packages(),
-    # package_dir={'': ''},
+    # package_dir={'': 'quaqsim'},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

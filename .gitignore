@@ -2,3 +2,4 @@
 test/__pycache__/conftest.cpython-*.pyc
 *.pyc
 *.egg-info
+build
