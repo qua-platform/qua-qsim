@@ -1,9 +1,9 @@
-# QuaQsim
+# Qua-Qsim
 A quantum simulator for QUA programs.
 
 ## Installation
 ```sh
-pip install git+http://github.com/qua-plaftorm/quaqsim.git
+pip install git+http://github.com/qua-platform/qua-qsim.git
 ```
 
 ## Example: Power Rabi
