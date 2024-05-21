@@ -13,7 +13,7 @@ simulated backend.
 
 ### 0. Start with a QUA config
 <details> 
-  <summary>Example</summary>
+  <summary>Example QUA config</summary>
 
 ```python
 
