@@ -1,14 +1,20 @@
 # Qua-Qsim
-A quantum simulator for QUA programs.
+Qua-Qsim, short for QUA Quantum Simulator, is a versatile tool that compiles QUA programs into hardware-agnostic pulse languages and simulates them on a quantum system. QUA programs are specifically designed for the Quantum Orchestration Platform (QOP) by Quantum Machines, which is used to control quantum systems.
+With Qua-Qsim, you can simulate these programs without the need for a physical quantum computer, providing users with valuable insights and intuition about QUA and quantum computing in general.
+
+Qua-Qsim currently features a compiler backend for Qiskit Pulse, allowing many QUA programs to be simulated using qiskit-dynamics. At present, we support fixed-frequency transmon qubits, and are actively working to expand support to include more qubit types and pulse languages. This ensures a broad range of applications and enhances the flexibility and utility of Qua-Qsim for various quantum computing projects.
+
 
 ## Installation
+To start using Qua-Qsim, simply install it via pip:
 ```sh
 pip install git+http://github.com/qua-platform/qua-qsim.git
 ```
 
 ## Example: Power Rabi
-Simulate simultaneous, two-qubit Rabi oscillations using an amplitude sweep on a
-simulated backend.
+In this example, we demonstrate how to use Qua-Qsim to simulate simultaneous, two-qubit Rabi oscillations by performing an amplitude sweep on a simulated backend. Rabi oscillations are a fundamental phenomenon in quantum mechanics, representing the coherent oscillation of a qubit's state under the influence of an external driving field. This example will guide you through configuring a QUA program, defining the necessary parameters, and running the simulation to observe the resulting oscillations.
+
+By following this example, you will gain hands-on experience with Qua-Qsim, learning how to set up and execute simulations that mimic real quantum experiments. This practical exercise will help solidify your understanding of both the QUA programming language and the underlying quantum principles.
 ![](img/rabi_example.png)
 
 ### 0. Start with a QUA config
@@ -320,3 +326,6 @@ for i, result in enumerate(results):
 plt.legend()
 plt.show()
 ```
+
+**Result**
+![](img/rabi_example.png)
