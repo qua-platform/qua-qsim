@@ -12,15 +12,14 @@ pip install git+http://github.com/qua-platform/qua-qsim.git
 ```
 
 ## Example: Power Rabi
-In this example, we demonstrate how to use Qua-Qsim to simulate simultaneous, two-qubit Rabi oscillations by performing an amplitude sweep on a simulated backend. Rabi oscillations are a fundamental phenomenon in quantum mechanics, representing the coherent oscillation of a qubit's state under the influence of an external driving field. This example will guide you through configuring a QUA program, defining the necessary parameters, and running the simulation to observe the resulting oscillations.
-
-By following this example, you will gain hands-on experience with Qua-Qsim, learning how to set up and execute simulations that mimic real quantum experiments. This practical exercise will help solidify your understanding of both the QUA programming language and the underlying quantum principles.
+In this example, we simulate simultaneous, two-qubit Rabi oscillations by performing an amplitude sweep on a simulated backend. Rabi oscillations represent the coherent oscillation of a qubit's state under an external driving field. This example guides you through configuring a QUA program, defining necessary parameters, and running the simulation to observe the oscillations.
 
 ### 0. Start with a QUA config
 
-The first step in simulating a quantum experiment with Qua-Qsim is to create a QUA configuration. This configuration defines the hardware setup, including qubit parameters, control signals, and readout settings. In this example, we'll set up a configuration for two qubits and their associated resonators, specifying details such as intermediate frequencies, LO frequencies, pulse amplitudes, and lengths. More information can be found at [QUA Configuration](https://docs.quantum-machines.co/1.1.7/qm-qua-sdk/docs/Introduction/config/).
+Create a QUA configuration that defines the hardware setup, including qubit parameters, control signals, and readout settings. 
+More information can be found at [QUA Configuration](https://docs.quantum-machines.co/1.1.7/qm-qua-sdk/docs/Introduction/config/).
+Below is an example configuration: 
 
-Creating an accurate QUA configuration is crucial as it ensures that the simulated environment closely mirrors the behavior of a real quantum system. Below is an example QUA configuration for our Power Rabi simulation:
 
 <details> 
   <summary>Example QUA config</summary>
@@ -227,9 +226,7 @@ config = {
 
 ### 1. Define your simulated quantum parameters
 
-With the QUA configuration in place, the next step is to define the parameters for your simulated quantum system. These parameters include the physical characteristics of the qubits and their interactions within the simulation environment. In this example, we will specify the parameters for a system of two fixed-frequency transmon qubits.
-
-Below is an example of how to define the quantum parameters for our simulation:
+Next, define the parameters for your simulated quantum system. These include the physical characteristics of the qubits and their interactions within the simulation environment. Below is an example:
 
 ```python
 from quaqsim.architectures.transmon_pair import TransmonPair
@@ -256,11 +253,7 @@ transmon_pair = TransmonPair(settings)
 
 ### 2. Map your QUA elements to simulation channels
 
-After defining your simulated quantum parameters, the next step is to map the elements from your QUA configuration to the corresponding simulation channels. This mapping ensures that the quantum operations defined in your QUA program are correctly applied to the simulated qubits and resonators.
-
-Mapping QUA elements to simulation channels involves linking each element in your QUA configuration to the appropriate backend channel in your simulation setup. This step is crucial for accurate simulation, as it aligns the logical operations in your QUA program with the physical actions in the simulated quantum system.
-
-Below is an example of how to map QUA elements to simulation channels:
+Map the elements from your QUA configuration to the corresponding simulation channels. This ensures the quantum operations in your QUA program are correctly applied to the simulated qubits and resonators.
 
 ```python
 from quaqsim.architectures.from_qua_channels import (
@@ -299,15 +292,9 @@ channel_map = {
 }
 ```
 
-In this example, we link each QUA element, such as qubit_1 and resonator_1, to their corresponding backend channels. This mapping ensures that the operations defined in your QUA program, like driving a qubit or reading out a resonator, are accurately reflected in the simulation.
-
-By completing this step, you establish a direct correspondence between the high-level QUA elements and the low-level simulation channels, enabling precise control and measurement within the simulated quantum environment.
-
 ### 3. Define a QUA Program
 
-With the configuration and mappings set up, the next step is to define your QUA program. This program specifies the quantum operations you want to perform, such as driving qubits and measuring their states.
-
-Below is an example of a QUA program for simulating Rabi oscillations with an amplitude sweep:
+Define your QUA program, specifying the quantum operations you want to perform. Below is an example for simulating Rabi oscillations with an amplitude sweep:
 
 ```python
 from qm.qua import *
@@ -330,7 +317,7 @@ In this program, we perform an amplitude sweep on two qubits, playing x90 pulses
 
 ### 4. Simulate!
 
-The final step is to run the simulation and visualize the results. This involves using Qua-Qsim to simulate the QUA program and then plotting the resulting data to observe the Rabi oscillations.
+Run the simulation and visualize the results. Use Qua-Qsim to simulate the QUA program and plot the resulting data to observe the Rabi oscillations.
 
 ```python
 import numpy as np
@@ -357,7 +344,7 @@ plt.legend()
 plt.show()
 ```
 
-In this example, we use the simulate_program function to run the QUA program on the defined backend, then plot the simulation results to visualize the Rabi oscillations for each qubit.
+In this example, we use simulate_program to run the QUA program on the defined backend, then plot the results to visualize the Rabi oscillations for each qubit.
 
 **Result**
 ![](img/rabi_example.png)
