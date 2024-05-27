@@ -24,6 +24,7 @@ def test_simultaneous_rabi(transmon_pair_backend, transmon_pair_qua_config, conf
         qua_config_to_backend_map=config_to_transmon_pair_backend_map,
         backend=transmon_pair_backend,
         num_shots=10_000,
+        # schedules_to_plot=[0]
     )
     # plt.show()
 
