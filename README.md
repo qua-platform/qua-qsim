@@ -20,7 +20,6 @@ Create a QUA configuration that defines the hardware setup, including qubit para
 More information can be found at [QUA Configuration](https://docs.quantum-machines.co/1.1.7/qm-qua-sdk/docs/Introduction/config/).
 Below is an example configuration: 
 
-
 <details> 
   <summary>Example QUA config</summary>
 
