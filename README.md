@@ -346,5 +346,43 @@ plt.show()
 
 In this example, we use simulate_program to run the QUA program on the defined backend, then plot the results to visualize the Rabi oscillations for each qubit.
 
-**Result**
+**Result**  
 ![](img/rabi_example.png)
+
+
+
+## Contribution
+
+We welcome contributions from the community! If you would like to contribute to this project, please follow the steps below:
+
+1. **Fork the repository**: Click on the "Fork" button at the top right of this repository to create a copy of it on your GitHub account.
+
+2. **Clone your fork**: Clone the forked repository to your local machine using the following command:
+   ```sh
+   git clone https://github.com/qua-platform/qua-qsim.git
+   ```
+
+3. **Create a branch**: Create a new branch for your contribution:
+   ```sh
+   git checkout -b your-branch-name
+   ```
+
+4. **Make your changes**: Make the necessary changes to the codebase.
+
+5. **Commit your changes**: Commit your changes with a meaningful commit message:
+   ```sh
+   git commit -m "Description of your changes"
+   ```
+
+6. **Push to GitHub**: Push your changes to your forked repository:
+   ```sh
+   git push origin your-branch-name
+   ```
+
+7. **Submit a pull request**: Go to the original repository and create a pull request from your forked repository and branch. Provide a clear description of the changes you have made and why they should be merged.
+
+### Contribution License Agreement (CLA)
+
+Before we can accept your contributions, you will need to sign a Contributor License Agreement (CLA). This ensures that we can distribute your code as part of the project. 
+
+The CLA can be found at https://cla-assistant.io/qua-platform/qua-qsim and is automatically presented for signing when you submit a pull request.
