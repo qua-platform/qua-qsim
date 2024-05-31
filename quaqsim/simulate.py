@@ -5,9 +5,10 @@ from qm import Program
 
 from quaqsim import Compiler
 from quaqsim.architectures.transmon_pair_backend_from_qua import ConfigToTransmonPairBackendMap
+from quaqsim.program_ast.program import Program as ProgramAST
 
 
-def simulate_program(qua_program: Program,
+def simulate_program(qua_program: Program | ProgramAST,
                      qua_config: dict,
                      qua_config_to_backend_map: ConfigToTransmonPairBackendMap,
                      backend: DynamicsBackend,
