@@ -5,3 +5,5 @@ qm-qua
 dataclasses_json
 jax
 jaxlib
+fastapi
+uvicorn
