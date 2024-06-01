@@ -7,3 +7,6 @@ jax
 jaxlib
 fastapi
 uvicorn
+dash
+dash_bootstrap_components
+requests

@@ -3,6 +3,7 @@ from typing import Annotated, Optional
 
 from fastapi import Body, FastAPI, HTTPException
 from fastapi import status as http_status
+from fastapi.middleware.wsgi import WSGIMiddleware
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,16 +11,16 @@ from qiskit.pulse import Schedule
 from qiskit.visualization.pulse_v2 import draw, IQXDebugging
 from qm.qua import *
 
-
+from ..architectures.transmon_pair_backend_from_qua import TransmonPairBackendFromQUA
 from ..program_to_quantum_pulse_sim_compiler.quantum_pulse_sim_compiler import Compiler
 from ._simulation_request import SimulationRequest, SimulationResult
+from .frontend import frontend
 from .utils import (
     load_from_base64,
     dump_fig_to_base64,
     program_to_ast,
     script_to_program,
 )
-from ..architectures.transmon_pair_backend_from_qua import TransmonPairBackendFromQUA
 
 matplotlib.use("agg")
 
@@ -73,6 +74,9 @@ def _get_simulated_results_graph(results):
 
 def create_app():
     app = FastAPI()
+
+    app.mount("/frontend", WSGIMiddleware(frontend.server))
+
     app.state.simulation_request = SimulationRequest()
 
     @app.post("/api/submit_qua_configuration")
