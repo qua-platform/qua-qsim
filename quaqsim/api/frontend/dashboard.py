@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import Dash, html, callback, Input, Output, ctx
+from dash import Dash, html, Input, Output, ctx
 import requests
 
 
@@ -60,7 +60,7 @@ dashboard.layout = dbc.Container(
 )
 
 
-@callback(
+@dashboard.callback(
     [
         Output("message", "children"),
         Output("message-row", "style"),
