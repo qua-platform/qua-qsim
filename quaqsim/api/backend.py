@@ -1,4 +1,3 @@
-from dataclasses import asdict
 from typing import Annotated, Optional
 
 from fastapi import Body, FastAPI, HTTPException
@@ -7,6 +6,7 @@ from fastapi.middleware.wsgi import WSGIMiddleware
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.figure import Figure
 from qiskit.pulse import Schedule
 from qiskit.visualization.pulse_v2 import draw, IQXDebugging
 from qm.qua import *
@@ -14,7 +14,7 @@ from qm.qua import *
 from ..architectures.transmon_pair_backend_from_qua import TransmonPairBackendFromQUA
 from ..program_to_quantum_pulse_sim_compiler.quantum_pulse_sim_compiler import Compiler
 from ._simulation_request import SimulationRequest, SimulationResult
-from .frontend import dashboard
+from .frontend import dashboard, editor
 from .utils import (
     load_from_base64,
     dump_fig_to_base64,
@@ -24,17 +24,20 @@ from .utils import (
 
 matplotlib.use("agg")
 
+start, stop, step = -2, 2, 0.1
+xs = np.arange(start, stop, step)
 
-def _get_pulse_schedule_graph(schedules: list[Schedule]):
-    n = len(schedules)
-    fig, ax = plt.subplots(
-        ncols=5,
-        nrows=n // 5 if n % 5 == 0 else n // 5 + 1,
-        figsize=(25, 4 * (n // 5)),
-        dpi=75,
-    )
 
-    for i, schedule in enumerate(schedules):
+def _get_pulse_schedule_graphs(schedules: list[Schedule]) -> tuple[str, list[str]]:
+    """Return a tuple `(pulse_schedule_graph, pulse_schedule_graphs)`. All graphs are
+    base64-encoded PNGs.
+
+    `pulse_schedule_graph` is a big graph with all pulse schedules.
+
+    `pulse_schedule_graphs` is a list of each individual single pulse schedule.
+    """
+
+    def _draw(ax):
         draw(
             program=schedule,
             style=IQXDebugging(),
@@ -47,35 +50,57 @@ def _get_pulse_schedule_graph(schedules: list[Schedule]):
             show_waveform_info=True,
             show_barrier=True,
             plotter="mpl2d",
-            axis=ax[i // 5][i % 5],
+            axis=ax,
         )
 
-    fig.tight_layout()
+    n = len(schedules)
+    all_graphs_fig, all_graphs_axes = plt.subplots(
+        ncols=5,
+        nrows=n // 5 if n % 5 == 0 else n // 5 + 1,
+        figsize=(25, 4 * (n // 5)),
+        dpi=75,
+    )
+    for i, schedule in enumerate(schedules):
+        _draw(ax=all_graphs_axes[i // 5][i % 5])
+    all_graphs_fig.tight_layout()
 
-    return dump_fig_to_base64(fig)
+    graphs = []
+    for schedule in schedules:
+        individual_fig, individual_ax = plt.subplots(ncols=1, nrows=1)
+        _draw(ax=individual_ax)
+        individual_fig.tight_layout()
+        graphs.append(dump_fig_to_base64(individual_fig))
+        plt.close(individual_fig)
+
+    return dump_fig_to_base64(all_graphs_fig), graphs
 
 
-def _get_simulated_results_graph(results):
-    start, stop, step = -2, 2, 0.1
-
+def _get_simulated_results_graph_figure(results) -> tuple[str, Figure]:
     fig, ax = plt.subplots()
     for i, result in enumerate(results):
-        ax.plot(
-            np.arange(start, stop, step),
-            result,
-            ".-",
-            label=f"Simulated Q{i}",
-        )
+        ax.plot(xs, result, ".-", label=f"Simulated Q{i}")
         ax.set_ylim(-0.05, 1.05)
     fig.legend()
 
-    return dump_fig_to_base64(fig)
+    return dump_fig_to_base64(fig), fig
+
+
+def _add_vertical_line_to_simulated_results_figure(tick: int, fig: Figure) -> str:
+    ax = fig.gca()
+    line = ax.axvline(x=xs[tick], color="r", linestyle="--")
+
+    graph = dump_fig_to_base64(fig)
+
+    line.remove()  # Delete the line, otherwise it stays on the figure.
+
+    return graph
 
 
 def create_app():
     app = FastAPI()
 
     app.mount("/dashboard", WSGIMiddleware(dashboard.server))
+    app.mount("/editor", WSGIMiddleware(editor.server))
 
     app.state.simulation_request = SimulationRequest()
 
@@ -149,20 +174,30 @@ def create_app():
         except Exception as e:
             request.result = SimulationResult(
                 pulse_schedule_graph=None,
+                pulse_schedule_graphs=None,
                 simulated_results=None,
                 simulated_results_graph=None,
+                simulated_results_figure=None,
                 error=e,
             )
         else:
+            pulse_schedule_graph, pulse_schedule_graphs = _get_pulse_schedule_graphs(
+                simulation.schedules
+            )
+            simulated_results_graph, simulated_results_figure = (
+                _get_simulated_results_graph_figure(results)
+            )
             request.result = SimulationResult(
-                pulse_schedule_graph=_get_pulse_schedule_graph(simulation.schedules),
+                pulse_schedule_graph=pulse_schedule_graph,
+                pulse_schedule_graphs=pulse_schedule_graphs,
                 simulated_results=results,
-                simulated_results_graph=_get_simulated_results_graph(results),
+                simulated_results_graph=simulated_results_graph,
+                simulated_results_figure=simulated_results_figure,
                 error=None,
             )
 
     @app.get("/api/status")
-    async def status() -> dict:
+    async def status(tick: Optional[int] = None) -> dict:
         """Return a dict with the result of the simulation, or an HTTP error if
         something went wrong."""
         result: SimulationResult = app.state.simulation_request.result
@@ -179,7 +214,27 @@ def create_app():
                 detail=str(app.state.simulation_request.result.error),
             )
 
-        return asdict(result)
+        if tick is None:
+            return {
+                "num_pulse_schedules": len(result.pulse_schedule_graphs),
+                "pulse_schedule_graph": result.pulse_schedule_graph,
+                "simulated_results": result.simulated_results,
+                "simulated_results_graph": result.simulated_results_graph,
+                "error": result.error,
+            }
+
+        # Ensure `tick` is within bounds.
+        tick = max(0, min(int(tick), len(result.pulse_schedule_graphs) - 1))
+
+        return {
+            "num_pulse_schedules": len(result.pulse_schedule_graphs),
+            "pulse_schedule_graph": result.pulse_schedule_graphs[tick],
+            "simulated_results": result.simulated_results,
+            "simulated_results_graph": _add_vertical_line_to_simulated_results_figure(
+                tick, result.simulated_results_figure
+            ),
+            "error": result.error,
+        }
 
     @app.post("/api/reset")
     async def reset():
