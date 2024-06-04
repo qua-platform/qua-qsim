@@ -3,10 +3,10 @@ from dash import Dash, html, callback, Input, Output, ctx
 import requests
 
 
-frontend = Dash(
+dashboard = Dash(
     __name__,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
-    requests_pathname_prefix="/frontend/",
+    requests_pathname_prefix="/dashboard/",
 )
 
 controls = html.Div(
@@ -16,9 +16,9 @@ controls = html.Div(
     ]
 )
 
-frontend.layout = dbc.Container(
+dashboard.layout = dbc.Container(
     [
-        html.H1("qua-qsim frontend"),
+        html.H1("qua-qsim dashboard"),
         html.Hr(),
         dbc.Row(
             dbc.Col(

@@ -14,7 +14,7 @@ from qm.qua import *
 from ..architectures.transmon_pair_backend_from_qua import TransmonPairBackendFromQUA
 from ..program_to_quantum_pulse_sim_compiler.quantum_pulse_sim_compiler import Compiler
 from ._simulation_request import SimulationRequest, SimulationResult
-from .frontend import frontend
+from .frontend import dashboard
 from .utils import (
     load_from_base64,
     dump_fig_to_base64,
@@ -75,7 +75,7 @@ def _get_simulated_results_graph(results):
 def create_app():
     app = FastAPI()
 
-    app.mount("/frontend", WSGIMiddleware(frontend.server))
+    app.mount("/dashboard", WSGIMiddleware(dashboard.server))
 
     app.state.simulation_request = SimulationRequest()
 
