@@ -1,5 +1,7 @@
 import pytest
 
+from qm.qua import *
+
 from quaqsim.architectures import TransmonSettings
 from quaqsim.architectures.transmon import Transmon
 from quaqsim.architectures.transmon_pair import TransmonPair
@@ -285,3 +287,34 @@ def transmon_pair_qua_config(transmon_pair) -> dict:
         },
     }
 
+
+@pytest.fixture
+def rabi_prog():
+    with program() as prog:
+        start, stop, step = -2, 2, 0.1
+        a = declare(fixed)
+
+        with for_(a, start, a < stop - 0.0001, a + step):
+            play("x90"*amp(a), "qubit_1")
+            play("x90"*amp(a), "qubit_2")
+
+            align("qubit_1", "qubit_2", "resonator_1", "resonator_2")
+            measure("readout", "resonator_1", None)
+            measure("readout", "resonator_2", None)
+
+    return prog
+
+
+@pytest.fixture
+def rabi_prog_script(rabi_prog) -> str:
+    return '''
+start, stop, step = -2, 2, 0.1
+a = declare(fixed)
+
+with for_(a, start, a < stop - 0.0001, a + step):
+    play("x90"*amp(a), "qubit_1")
+    play("x90"*amp(a), "qubit_2")
+
+    align("qubit_1", "qubit_2", "resonator_1", "resonator_2")
+    measure("readout", "resonator_1", None)
+    measure("readout", "resonator_2", None)'''.strip()

@@ -5,3 +5,8 @@ qm-qua
 dataclasses_json
 jax
 jaxlib
+fastapi
+uvicorn
+dash
+dash_bootstrap_components
+requests
