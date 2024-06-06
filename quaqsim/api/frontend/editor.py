@@ -4,6 +4,7 @@ from dash import Dash, dcc, html, Input, Output, State, no_update
 import requests
 
 from ..utils import dump_to_base64
+from ._utils import header
 
 
 editor = Dash(
@@ -65,7 +66,7 @@ simulation_container = dbc.Container(
 
 editor.layout = dbc.Container(
     [
-        html.H1("qua-qsim editor"),
+        header,
         html.Hr(),
         dbc.Row(
             dbc.Col(

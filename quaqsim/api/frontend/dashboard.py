@@ -2,6 +2,8 @@ import dash_bootstrap_components as dbc
 from dash import Dash, html, Input, Output, ctx
 import requests
 
+from ._utils import header
+
 
 dashboard = Dash(
     __name__,
@@ -18,7 +20,7 @@ controls = html.Div(
 
 dashboard.layout = dbc.Container(
     [
-        html.H1("qua-qsim dashboard"),
+        header,
         html.Hr(),
         dbc.Row(
             dbc.Col(
