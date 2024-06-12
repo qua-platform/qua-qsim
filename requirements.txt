@@ -9,4 +9,5 @@ fastapi
 uvicorn
 dash
 dash_bootstrap_components
+dash_editor_components
 requests
