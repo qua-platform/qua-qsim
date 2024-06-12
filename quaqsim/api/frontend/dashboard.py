@@ -1,12 +1,14 @@
 import dash_bootstrap_components as dbc
-from dash import Dash, html, callback, Input, Output, ctx
+from dash import Dash, html, Input, Output, ctx
 import requests
 
+from ._utils import header
 
-frontend = Dash(
+
+dashboard = Dash(
     __name__,
     external_stylesheets=[dbc.themes.BOOTSTRAP],
-    requests_pathname_prefix="/frontend/",
+    requests_pathname_prefix="/dashboard/",
 )
 
 controls = html.Div(
@@ -16,9 +18,9 @@ controls = html.Div(
     ]
 )
 
-frontend.layout = dbc.Container(
+dashboard.layout = dbc.Container(
     [
-        html.H1("qua-qsim frontend"),
+        header,
         html.Hr(),
         dbc.Row(
             dbc.Col(
@@ -60,7 +62,7 @@ frontend.layout = dbc.Container(
 )
 
 
-@callback(
+@dashboard.callback(
     [
         Output("message", "children"),
         Output("message-row", "style"),
