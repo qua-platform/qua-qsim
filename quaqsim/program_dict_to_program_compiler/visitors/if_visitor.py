@@ -13,5 +13,9 @@ class IfVisitor(Visitor):
 
         cond = ExpressionVisitor().visit(d['condition'])
         body = statements_visitor.visit(d['body'])
+        else_ifs = []
+        if 'elseifs' in d:
+            for else_if in d['elseifs']:
+                else_ifs.append(*self.visit(else_if))
 
-        return [If(body=[*body], cond=cond)]
+        return [If(body=[*body], cond=cond, else_ifs=[*else_ifs])]

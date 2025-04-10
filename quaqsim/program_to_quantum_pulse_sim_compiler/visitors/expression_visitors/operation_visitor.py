@@ -27,6 +27,8 @@ class OperationVisitor:
 
         if op == 'ADD':
             return left + right
+        elif op == 'SUB':
+            return left - right
         elif op == 'DIV':
             return left / right
         elif op == 'MULT':
@@ -43,5 +45,7 @@ class OperationVisitor:
             return left <= right
         elif op == 'EQ':
             return left == right
+        elif op == 'OR':
+            return left or right
         else:
             raise NotImplementedError(f'Unrecognised operation {op}')

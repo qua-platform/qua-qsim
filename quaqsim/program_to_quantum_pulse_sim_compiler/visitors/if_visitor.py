@@ -15,3 +15,6 @@ class IfVisitor(Visitor):
         if condition:
             for inner_node in node.body:
                 inner_node.accept(node_visitor, context)
+        else:
+            for else_if in node.else_ifs:
+                self.visit(else_if, context)

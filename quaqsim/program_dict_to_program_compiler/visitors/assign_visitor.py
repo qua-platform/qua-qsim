@@ -8,7 +8,11 @@ from .visitor import Visitor
 
 class AssignVisitor(Visitor):
     def visit(self, d: dict) -> List[Node]:
-        target = d['target']['variable']['name']
-        value = ExpressionVisitor().visit(d['expression'])
+        expression_visitor = ExpressionVisitor()
+        if 'target' not in d:
+            raise NotImplementedError()
+
+        target = expression_visitor.visit(d['target'])
+        value = expression_visitor.visit(d['expression'])
 
         return [Assign(target, value)]

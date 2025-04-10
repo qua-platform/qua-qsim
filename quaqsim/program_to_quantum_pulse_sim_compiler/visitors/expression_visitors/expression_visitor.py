@@ -1,5 +1,6 @@
 from ...context import Context
 from ....program_ast.expressions import Expression, Reference, Operation, Literal, Function
+from ....program_ast.expressions.array_cell import ArrayCell
 
 
 class ExpressionVisitor:
@@ -18,6 +19,10 @@ class ExpressionVisitor:
         elif isinstance(expression, Function):
             from .function_visitor import FunctionVisitor
             return FunctionVisitor().visit(expression, context)
+
+        elif isinstance(expression, ArrayCell):
+            index = self.visit(expression.index, context)
+            return context.vars[expression.array.name][index]
 
         else:
             raise NotImplementedError(f"Uncrecognised expression type {type(expression)}")

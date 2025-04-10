@@ -1,3 +1,5 @@
+import copy
+
 from quaqsim.program_ast.expressions.definition import Definition
 
 
@@ -5,6 +7,12 @@ default_values = {
     'INT': 0,
     'REAL': 0.,
     'BOOL': False,
+}
+
+cast_funcs = {
+    'INT': int,
+    'REAL': float,
+    'BOOL': bool
 }
 
 
@@ -16,8 +24,8 @@ class DefinitionVisitor:
                 raise KeyError(f"Unrecognised variable type in definition {definition.type}")
             value = default_values[definition.type]
         elif len(value) == 1:
-            value = value[0].value
+            value = cast_funcs[definition.type](value[0].value)
         else:
-            raise NotImplementedError("Unable to handle declarations with given value field.")
+            raise NotImplementedError()
 
         return {definition.name: value}

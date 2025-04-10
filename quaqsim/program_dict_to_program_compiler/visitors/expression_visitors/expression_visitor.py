@@ -27,5 +27,9 @@ class ExpressionVisitor:
             from .function_visitor import FunctionVisitor
             return FunctionVisitor().visit(expression['libFunction'])
 
+        elif expression_type == 'arrayCell':
+            from .array_cell_visitor import ArrayCellVisitor
+            return ArrayCellVisitor().visit(expression['arrayCell'])
+
         else:
             raise NotImplementedError(f'Unknown expression type {expression_type}')

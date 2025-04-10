@@ -1,14 +1,14 @@
 from .expression_visitor import ExpressionVisitor
-from ....program_ast.expressions.function import Function
+from ....program_ast.expressions import Reference
+from ....program_ast.expressions.array_cell import ArrayCell
 
 
-class FunctionVisitor:
-    def visit(self, function: dict) -> Function:
+class ArrayCellVisitor:
+    def visit(self, array_cell: dict) -> ArrayCell:
         expression_visitor = ExpressionVisitor()
-        arguments = []
-        for arg in function['arguments']:
-            arguments.append(expression_visitor.visit(arg['scalar']))
 
-        return Function(arguments=arguments,
-                        function_name=function['functionName'],
-                        library_name=function['libraryName'])
+        # todo: expression visitor should support reference visitor
+        array_reference = Reference(array_cell['arrayVar']['name'])
+        array_index = expression_visitor.visit(array_cell['index'])
+
+        return ArrayCell(array=array_reference, index=array_index)

@@ -94,7 +94,7 @@ def transmon_pair_backend(transmon_pair, config_to_transmon_pair_backend_map):
 def transmon_pair_qua_config(transmon_pair) -> dict:
     u = unit(coerce_to_integer=True)
 
-    x90_q1_amp = 0.08
+    x90_q1_amp = 0.157600/2
     x90_q2_amp = 0.068
 
     x90_len = 260 // 4
@@ -144,6 +144,10 @@ def transmon_pair_qua_config(transmon_pair) -> dict:
                 "operations": {
                     "x90": "x90_q1_pulse",
                     "y90": "y90_q1_pulse",
+                    "-x90": "-x90_q1_pulse",
+                    "-y90": "-y90_q1_pulse",
+                    "x180": "x180_q1_pulse",
+                    "y180": "y180_q1_pulse",
                 },
             },
             "qubit_1t2": {
@@ -235,6 +239,38 @@ def transmon_pair_qua_config(transmon_pair) -> dict:
                     "Q": "y90_q1_Q_wf",
                 },
             },
+            "-x90_q1_pulse": {
+                "operation": "control",
+                "length": x90_len,
+                "waveforms": {
+                    "I": "-x90_q1_I_wf",
+                    "Q": "-x90_q1_Q_wf",
+                },
+            },
+            "-y90_q1_pulse": {
+                "operation": "control",
+                "length": x90_len,
+                "waveforms": {
+                    "I": "-y90_q1_I_wf",
+                    "Q": "-y90_q1_Q_wf",
+                },
+            },
+            "x180_q1_pulse": {
+                "operation": "control",
+                "length": x90_len,
+                "waveforms": {
+                    "I": "x180_q1_I_wf",
+                    "Q": "x180_q1_Q_wf",
+                },
+            },
+            "y180_q1_pulse": {
+                "operation": "control",
+                "length": x90_len,
+                "waveforms": {
+                    "I": "y180_q1_I_wf",
+                    "Q": "y180_q1_Q_wf",
+                },
+            },
             "x90_q2_pulse": {
                 "operation": "control",
                 "length": x90_len,
@@ -273,6 +309,14 @@ def transmon_pair_qua_config(transmon_pair) -> dict:
             "x90_q1_Q_wf": {"type": "constant", "sample": 0.},
             "y90_q1_I_wf": {"type": "constant", "sample": 0.},
             "y90_q1_Q_wf": {"type": "constant", "sample": x90_q1_amp},
+            "-x90_q1_I_wf": {"type": "constant", "sample": -x90_q1_amp},
+            "-x90_q1_Q_wf": {"type": "constant", "sample": 0.},
+            "-y90_q1_I_wf": {"type": "constant", "sample": 0.},
+            "-y90_q1_Q_wf": {"type": "constant", "sample": -x90_q1_amp},
+            "x180_q1_I_wf": {"type": "constant", "sample": 2*x90_q1_amp},
+            "x180_q1_Q_wf": {"type": "constant", "sample": 0.},
+            "y180_q1_I_wf": {"type": "constant", "sample": 0.},
+            "y180_q1_Q_wf": {"type": "constant", "sample": 2*x90_q1_amp},
             # q2
             "x90_q2_I_wf": {"type": "constant", "sample": x90_q2_amp},
             "x90_q2_Q_wf": {"type": "constant", "sample": 0.},
