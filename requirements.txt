@@ -1,7 +1,7 @@
-qiskit_dynamics
-qiskit
-qualang_tools
-qm-qua
+quaqsim @ git+http://github.com/qua-platform/qua-qsim.git@70ce16c90e35f3b163a4776b345000aab217fd9d
+qiskit_dynamics==0.5.1
+qiskit==1.2.4
+qm-qua==1.2.2
 dataclasses_json
 jax
 jaxlib
