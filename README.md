@@ -14,6 +14,8 @@ pip install git+http://github.com/qua-platform/qua-qsim.git
 ## Example: Power Rabi
 In this example, we simulate simultaneous, two-qubit Rabi oscillations by performing an amplitude sweep on a simulated backend. Rabi oscillations represent the coherent oscillation of a qubit's state under an external driving field. This example guides you through configuring a QUA program, defining necessary parameters, and running the simulation to observe the oscillations.
 
+The code for the following example can be found in [test/test_plot.py](test/test_plot.py). 
+
 ### 0. Start with a QUA config
 
 Create a QUA configuration that defines the hardware setup, including qubit parameters, control signals, and readout settings. 
