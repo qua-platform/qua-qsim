@@ -1,0 +1,28 @@
+[project]
+name = "qua-qsim"
+version = "0.1.0"
+description = "Add description"
+readme = "README.md"
+requires-python = ">=3.9,<=3.12"
+dependencies = [
+    "dataclasses-json>=0.6.7",
+    "qm-qua>=1.2.3a1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[dependency-groups]
+dev = ["ipykernel>=7.0.0a1", "pytest-mock>=3.14.0", "pytest>=8.3.5"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["quaqsim"]
+
+[tool.uv.pip]
+prerelease = "allow"
+
+[tool.uv]
+prerelease = "allow"
