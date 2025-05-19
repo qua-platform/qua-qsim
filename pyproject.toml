@@ -16,7 +16,10 @@ allow-direct-references = true
 dev = ["ipykernel>=7.0.0a1", "pytest-mock>=3.14.0", "pytest>=8.3.5"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["quaqsim"]
+packages = ["qua_qsim"]
+
+[tool.hatch.build.sources]
+"quaqsim" = "qua_qsim"
 
 [tool.uv.pip]
 prerelease = "allow"
