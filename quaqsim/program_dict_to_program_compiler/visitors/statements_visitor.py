@@ -7,6 +7,7 @@ from .frame_rotation_visitor import FrameRotationVisitor
 from .if_visitor import IfVisitor
 from .measure_visitor import MeasureVisitor
 from .play_visitor import PlayVisitor
+from .ramp_to_zero_visitor import RampToZeroVisitor
 from .reset_frame_visitor import ResetFrameVisitor
 from .reset_phase_visitor import ResetPhaseVisitor
 from .save_visitor import SaveVisitor
@@ -23,6 +24,7 @@ node_types_and_visitors = {
     'if': IfVisitor(),
     'measure': MeasureVisitor(),
     'play': PlayVisitor(),
+    'rampToZero': RampToZeroVisitor(),
     'resetFrame': ResetFrameVisitor(),
     'resetPhase': ResetPhaseVisitor(),
     'save': SaveVisitor(),
