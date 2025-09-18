@@ -1,4 +1,8 @@
 # Qua-Qsim
+
+> **Warning**  
+> Qua-Qsim has been deprecated because it relies on Qiskit Pulse, which has been deprecated from Qiskit.
+
 Qua-Qsim, short for QUA Quantum Simulator, is a versatile tool that compiles QUA programs into hardware-agnostic pulse languages and simulates them on a quantum system. QUA programs are specifically designed for the Quantum Orchestration Platform (QOP) by Quantum Machines, which is used to control quantum systems.
 With Qua-Qsim, you can simulate these programs without the need for a physical quantum computer, providing users with valuable insights and intuition about QUA and quantum computing in general.
 
